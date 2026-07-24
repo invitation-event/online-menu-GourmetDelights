@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet Delights - Online Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Gourmet Delights - Fine Dining Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -15,11 +15,16 @@
 
         :root {
             --primary-color: #d4a574;
-            --secondary-color: #2c2c2c;
+            --secondary-color: #1a1a1a;
             --accent-color: #e8b89d;
             --light-bg: #faf8f5;
             --text-dark: #1a1a1a;
             --text-light: #666;
+            --gold: #c9a961;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -27,22 +32,65 @@
             background-color: var(--light-bg);
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Navigation */
         nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             padding: 1rem 5%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 0.5rem 5%;
+            background: rgba(255, 255, 255, 0.99);
         }
 
         .nav-container {
@@ -55,10 +103,13 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .logo span {
@@ -67,7 +118,7 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
             align-items: center;
         }
@@ -76,8 +127,9 @@
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
             position: relative;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
@@ -99,12 +151,40 @@
             width: 100%;
         }
 
+        .nav-cta {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+        }
+
         /* Language Switcher */
         .lang-switcher {
             display: flex;
             gap: 0.5rem;
             background: var(--light-bg);
-            padding: 0.5rem;
+            padding: 0.4rem;
             border-radius: 25px;
             border: 2px solid var(--primary-color);
         }
@@ -119,6 +199,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
             transition: all 0.3s;
+            font-size: 0.85rem;
         }
 
         .lang-btn.active {
@@ -128,10 +209,11 @@
 
         /* Hero Section */
         .hero {
-            margin-top: 70px;
-            height: 90vh;
-            background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920') center/cover;
+            margin-top: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1920') center/cover;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -141,31 +223,71 @@
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to top, var(--light-bg), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: rgba(212, 165, 116, 0.9);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            line-height: 1.1;
         }
 
         .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s backwards;
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.4s backwards;
             font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.6s backwards;
+            flex-wrap: wrap;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 1rem 3rem;
+            padding: 1.2rem 3rem;
             background: var(--primary-color);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
             transition: all 0.3s;
-            animation: fadeInUp 1s ease 0.4s backwards;
             box-shadow: 0 10px 30px rgba(212, 165, 116, 0.4);
+            border: 2px solid var(--primary-color);
         }
 
         .cta-button:hover {
@@ -174,28 +296,60 @@
             background: #c4956a;
         }
 
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--secondary-color);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 3;
+        }
+
+        .scroll-indicator i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
         /* Section Styling */
         section {
-            padding: 5rem 5%;
+            padding: 6rem 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-title {
+        .section-header {
             text-align: center;
-            font-size: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             color: var(--secondary-color);
             position: relative;
             display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -205,44 +359,149 @@
         }
 
         .section-subtitle {
-            text-align: center;
             color: var(--text-light);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 2rem auto 0;
         }
 
-        /* Menu Categories */
+        /* About Section */
+        .about {
+            background: white;
+            padding: 6rem 5%;
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-images {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .about-img {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .about-img:hover img {
+            transform: scale(1.1);
+        }
+
+        .about-img.large {
+            grid-row: span 2;
+        }
+
+        .about-img.large img {
+            height: 100%;
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .about-content h2 span {
+            color: var(--primary-color);
+        }
+
+        .about-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            margin-bottom: 0.3rem;
+            color: var(--secondary-color);
+        }
+
+        .feature-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            background: var(--light-bg);
+        }
+
         .menu-categories {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             flex-wrap: wrap;
         }
 
         .category-btn {
-            padding: 0.8rem 2rem;
+            padding: 1rem 2.5rem;
             border: 2px solid var(--primary-color);
             background: transparent;
             color: var(--primary-color);
             border-radius: 30px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s;
+            font-size: 1rem;
         }
 
         .category-btn:hover,
         .category-btn.active {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
         }
 
-        /* Menu Grid */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 2.5rem;
         }
 
@@ -250,19 +509,27 @@
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .menu-item.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s;
         }
 
         .menu-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
         }
 
         .menu-item-image {
             position: relative;
-            height: 250px;
+            height: 280px;
             overflow: hidden;
         }
 
@@ -270,11 +537,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.6s;
         }
 
         .menu-item:hover .menu-item-image img {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .menu-badge {
@@ -283,39 +550,45 @@
             right: 20px;
             background: var(--primary-color);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
             font-size: 0.85rem;
             font-weight: 600;
             z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .menu-item-content {
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
         .menu-item-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 1rem;
         }
 
         .menu-item-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--secondary-color);
             margin-bottom: 0.5rem;
         }
 
         .menu-item-price {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--primary-color);
             font-weight: 700;
         }
 
+        .rating {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
         .menu-item-description {
             color: var(--text-light);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             line-height: 1.8;
         }
 
@@ -323,97 +596,286 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
         }
 
-        .rating {
-            color: #ffc107;
+        .prep-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         .order-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 2rem;
             background: var(--secondary-color);
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
         .order-btn:hover {
             background: var(--primary-color);
             transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
         }
 
-        /* Chef Story Section */
-        .chef-story {
+        /* Why Choose Us */
+        .why-us {
             background: var(--secondary-color);
-            padding: 5rem 5%;
-            margin-top: 3rem;
+            color: white;
+            padding: 6rem 5%;
+        }
+
+        .why-us .section-title {
             color: white;
         }
 
-        .chef-story .section-title {
-            color: white;
-        }
-
-        .chef-story .section-subtitle {
+        .why-us .section-subtitle {
             color: rgba(255,255,255,0.8);
         }
 
-        .chef-content {
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: white;
+        }
+
+        .testimonials-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
 
-        .chef-image {
+        .testimonial-card {
+            background: var(--light-bg);
+            padding: 3rem;
             border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            transition: all 0.3s;
         }
 
-        .chef-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            transition: transform 0.5s;
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
-        .chef-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .chef-text h3 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+        .testimonial-card::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
             color: var(--primary-color);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            line-height: 1;
         }
 
-        .chef-text p {
+        .testimonial-stars {
+            color: #ffc107;
+            margin-bottom: 1.5rem;
             font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: rgba(255,255,255,0.9);
         }
 
-        .chef-signature {
+        .testimonial-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-light);
+            margin-bottom: 2rem;
             font-style: italic;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            margin-top: 2rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-author-info h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .testimonial-author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Reservation Section */
+        .reservation {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(232, 184, 157, 0.1));
+            padding: 6rem 5%;
+        }
+
+        .reservation-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .reservation-image {
+            background: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800') center/cover;
+            position: relative;
+        }
+
+        .reservation-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(212, 165, 116, 0.8);
+        }
+
+        .reservation-content {
+            padding: 4rem;
+        }
+
+        .reservation-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .reservation-content > p {
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.4);
         }
 
         /* Gallery Section */
         .gallery {
+            background: var(--light-bg);
+        }
+
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
-            margin-top: 3rem;
         }
 
         .gallery-item {
@@ -422,13 +884,14 @@
             border-radius: 15px;
             aspect-ratio: 1;
             cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.6s;
         }
 
         .gallery-item:hover img {
@@ -458,43 +921,320 @@
             font-size: 2.5rem;
         }
 
-        /* Footer */
-        footer {
-            background: var(--secondary-color);
-            color: white;
-            padding: 3rem 5%;
-            text-align: center;
-            margin-top: 5rem;
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
         }
 
-        .footer-content {
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary-color);
+        }
+
+        /* Chef Section */
+        .chef-section {
+            background: white;
+        }
+
+        .chef-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .chef-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+        }
+
+        .chef-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .chef-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .chef-badge {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .chef-badge .years {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .chef-badge .text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .chef-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .chef-content h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .chef-content p {
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .chef-signature {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--light-bg);
+        }
+
+        .signature-img {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--secondary-color);
+            color: white;
+            padding: 6rem 5%;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .contact-details {
+            margin-bottom: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .contact-text p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+        }
+
+        .contact-hours {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .contact-hours h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            height: 100%;
+            min-height: 400px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .map-placeholder {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .map-placeholder i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f0f0f;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-container {
             max-width: 1400px;
             margin: 0 auto;
         }
 
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
         .social-links {
             display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
+            gap: 1rem;
         }
 
         .social-links a {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
         }
 
         .social-links a:hover {
             background: var(--primary-color);
             transform: translateY(-5px);
+        }
+
+        .footer-column h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
         }
 
         /* Animations */
@@ -509,9 +1249,65 @@
             }
         }
 
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Responsive */
-        @media (max-width: 968px) {
+        @media (max-width: 1024px) {
             .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .about-container,
+            .chef-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .reservation-container {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation-image {
+                height: 300px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
                 font-size: 2.5rem;
             }
 
@@ -519,17 +1315,25 @@
                 grid-template-columns: 1fr;
             }
 
-            .gallery {
-                grid-template-columns: repeat(2, 1fr);
+            .about-images {
+                grid-template-columns: 1fr;
             }
 
-            .chef-content {
+            .about-img.large {
+                grid-row: span 1;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
-            .nav-links {
-                display: none;
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -545,6 +1349,7 @@
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
         }
 
         .modal.active {
@@ -553,49 +1358,118 @@
 
         .modal-content {
             background: white;
-            padding: 2rem;
+            padding: 3rem;
             border-radius: 20px;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             text-align: center;
-            animation: fadeInUp 0.3s;
+            animation: fadeInUp 0.4s;
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: white;
         }
 
         .modal-content h3 {
             margin-bottom: 1rem;
             color: var(--secondary-color);
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
         }
 
         .close-modal {
-            margin-top: 1.5rem;
-            padding: 0.8rem 2rem;
+            padding: 1rem 3rem;
             background: var(--primary-color);
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--gold);
+            transform: translateY(-5px);
         }
     </style>
 </head>
 <body>
 
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">Gourmet Delights</div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Gourmet<span>Delights</span></a>
-            <ul class="nav-links">
-                <li><a href="#home" data-en="Home" data-am="Գլխավոր">Գլխավոր</a></li>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" data-en="Home" data-am="լխավոր">Գլխավոր</a></li>
+                <li><a href="#about" data-en="About" data-am="Մեր մասին">Մեր մասին</a></li>
                 <li><a href="#menu" data-en="Menu" data-am="Մենյու">Մենյու</a></li>
-                <li><a href="#chef" data-en="Our Chef" data-am="Մեր խոհարարը">Մեր խոհարարը</a></li>
+                <li><a href="#chef" data-en="Chef" data-am="Շեֆ">եֆ</a></li>
                 <li><a href="#gallery" data-en="Gallery" data-am="Պատկերասրահ">Պատկերասրահ</a></li>
+                <li><a href="#reservation" data-en="Reservation" data-am="Ամրագրում">Ամրագրում</a></li>
                 <li><a href="#contact" data-en="Contact" data-am="Կապ">Կապ</a></li>
                 <li>
                     <div class="lang-switcher">
                         <button class="lang-btn active" data-lang="en">EN</button>
-                        <button class="lang-btn" data-lang="am">ՀԱՅ</button>
+                        <button class="lang-btn" data-lang="am">ՀԱ</button>
                     </div>
                 </li>
+                <li><a href="#reservation" class="nav-cta" data-en="Book a Table" data-am="Ամրագրել սեղան">Ամրագրել սեղան</a></li>
             </ul>
         </div>
     </nav>
@@ -603,404 +1477,791 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 data-en="Exquisite Culinary Experience" data-am="Բացառիկ խոհարարական փորձառություն">Բացառիկ խոհարարական փորձառություն</h1>
-            <p data-en="Savor the art of fine dining with our carefully crafted dishes" data-am="Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով">Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով</p>
-            <a href="#menu" class="cta-button" data-en="Explore Our Menu" data-am="Դիտել մեր մենյուն">Դիտել մեր մենյուն</a>
+            <div class="hero-badge" data-en="★ Award Winning Restaurant ★" data-am="★ Մրցանակակիր ռեստորան ★">★ Մրցանակակիր ռեստորան ★</div>
+            <h1 data-en="Exquisite Culinary Experience" data-am="Բացառիկ ոհարարական փորձառություն">Բացառիկ խոհարարական փորձառություն</h1>
+            <p data-en="Savor the art of fine dining with our carefully crafted dishes, where every bite tells a story of passion and excellence" data-am="Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին">Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="cta-button" data-en="Explore Our Menu" data-am="իտել մենյուն">իտել մենյուն</a>
+                <a href="#reservation" class="cta-button secondary" data-en="Reserve a Table" data-am="Ամրագրել սեղան">Ամրագրել սեղան</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-images">
+                <div class="about-img large">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" alt="Restaurant Interior">
+                </div>
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600" alt="Chef Cooking">
+                </div>
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600" alt="Fine Dining">
+                </div>
+            </div>
+            <div class="about-content">
+                <h2 data-en="Our <span>Story</span>" data-am="Մեր <span>պատմությունը</span>">Մեր <span>պատմությունը</span></h2>
+                <p data-en="Founded in 2010, Gourmet Delights has been at the forefront of culinary excellence, bringing together the finest ingredients from local farms and international markets." data-am="Հիմնադրված 2010 թվականին, Gourmet Delights-ը եղել է խոհարարական գերազանցության առաջամարտիկ, միավորելով ավագույն բաղադրիչները տեղական ֆերմաներից և միջազգային ուկաներից:">Հիմնադրված 2010 թվականին, Gourmet Delights-ը եղել է խոհարարական գերազանցության առաջամարտիկ, միավորելով լավագույն բաղադրիչները տեղական երմաներից և միջազգային շուկաներից:</p>
+                <p data-en="Our commitment to quality, creativity, and exceptional service has made us a beloved destination for food enthusiasts and special occasions alike." data-am="եր հանձնառությունը որակին, ստեղծագործականությանը և բացառիկ սպասարկմանը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:">Մեր հանձնառությունը որակին, ստեղծագործականությանը և բացառիկ սպասարկմանը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:</p>
+                
+                <div class="about-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-en="Fresh Ingredients" data-am="Թարմ բաղադրիչներ">Թարմ բաղադրիչներ</h4>
+                            <p data-en="Farm to table freshness" data-am="Ֆերմայից սեղան">երմայից սեղան</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-en="Award Winning" data-am="Մրցանակակիր">րցանակակիր</h4>
+                            <p data-en="Best restaurant 2025" data-am="ավագույն ռեստորան 2025">Լավագույն ռեստորան 2025</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-wine-glass-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-en="Fine Wines" data-am="Նրբաճաշակ գինիներ">Նրբաճաշակ գինիներ</h4>
+                            <p data-en="Curated wine selection" data-am="Ընտրված գինիներ">Ընտրված գինիներ</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-en="Made with Love" data-am="Պատրաստված սիրով">Պատրաստված սիրով</h4>
+                            <p data-en="Passion in every dish" data-am="իրք յուրաքանչյուր ուտեստում">Կիրք յուրաքանչյուր ուտեստում</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Menu Section -->
-    <section id="menu">
-        <h2 class="section-title" data-en="Our Menu" data-am="Մեր Մենյուն">Մեր Մենյուն</h2>
-        <p class="section-subtitle" data-en="Discover our signature dishes prepared with passion and precision" data-am="Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ">Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ</p>
+    <section class="menu-section" id="menu">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Our Menu" data-am="Մեր Մենյուն">Մեր Մենյուն</h2>
+            <p class="section-subtitle" data-en="Discover our signature dishes prepared with passion and precision" data-am="Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ">Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ</p>
+        </div>
 
         <div class="menu-categories">
-            <button class="category-btn active" data-category="all" data-en="All" data-am="Բոլորը">Բոլորը</button>
+            <button class="category-btn active" data-category="all" data-en="All Dishes" data-am="Բոլոր ուտեստները">Բոլոր ուտեստները</button>
             <button class="category-btn" data-category="appetizers" data-en="Appetizers" data-am="Նախուտեստներ">Նախուտեստներ</button>
-            <button class="category-btn" data-category="mains" data-en="Main Course" data-am="Հիմնական ուտեստներ">Հիմնական ուտեստներ</button>
+            <button class="category-btn" data-category="mains" data-en="Main Course" data-am="Հիմնական">Հիմնական</button>
+            <button class="category-btn" data-category="seafood" data-en="Seafood" data-am="ովամթերք">Ծովամթերք</button>
             <button class="category-btn" data-category="desserts" data-en="Desserts" data-am="Անուշեղեն">Անուշեղեն</button>
             <button class="category-btn" data-category="beverages" data-en="Beverages" data-am="Խմիչքներ">Խմիչքներ</button>
         </div>
 
-        <div class="menu-grid">
-            <!-- Menu Item 1 -->
-            <div class="menu-item" data-category="appetizers">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=800" alt="Bruschetta">
-                    <span class="menu-badge" data-en="Popular" data-am="Հիթ">Հիթ</span>
+        <div class="menu-grid" id="menuGrid">
+            <!-- Menu items will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Why Choose Us" data-am="Ինչու ընտրել մեզ">նչու ընտրել մեզ</h2>
+            <p class="section-subtitle" data-en="Experience the difference that makes us special" data-am="Փորձարկեք տարբերությունը, որը մեզ առանձնահատուկ է դարձնում">Փորձարկեք տարբերությունը, որը մեզ առանձնահատուկ է դարձնում</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-card-icon">
+                    <i class="fas fa-utensils"></i>
                 </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Classic Bruschetta" data-am="Դասական Բրուսկետա">Դասական Բրուսկետա</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$12</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Toasted bread topped with fresh tomatoes, basil, garlic, and extra virgin olive oil. A taste of Italy in every bite." data-am="Խորոված հաց՝ թարմ լոլիկներով, ռեհանով, սխտորով և լրացուցիչ կուսական ձիթաձեթով: Իտալիայի համը յուրաքանչյուր պատառում:">Խորոված հաց՝ թարմ լոլիկներով, ռեհանով, սխտորով և լրացուցիչ կուսական ձիթաձեթով: Իտալիայի համը յուրաքանչյուր պատառում:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 15 min</span>
-                        <button class="order-btn" onclick="orderItem('Classic Bruschetta')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
+                <h3 data-en="Gourmet Cuisine" data-am="Նրբաճաշակ խոհանոց">Նրբաճաշակ խոհանոց</h3>
+                <p data-en="World-class chefs creating masterpieces with the finest ingredients" data-en="Աշխարհի դասի ոհարարներ, ովքեր ստեղծում են գլուխգործոցներ ավագույն բաղադրիչներով">Աշխարհի դասի խոհարարներ, ովքեր ստեղծում են գլուխգործոցներ ավագույն բաղադրիչներով</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card-icon">
+                    <i class="fas fa-glass-cheers"></i>
+                </div>
+                <h3 data-en="Elegant Ambiance" data-am="Էլեգանտ մթնոլորտ">Էլեգանտ մթնոլորտ</h3>
+                <p data-en="Sophisticated atmosphere perfect for any occasion" data-en="զուր մթնոլորտ՝ կատարյալ ցանկացած առիթի համար">Իզուր մթնոլորտ՝ կատարյալ ցանկացած առիթի համար</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card-icon">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                <h3 data-en="Exceptional Service" data-am="ացառիկ սպասարկում">Բացառիկ սպասարկում</h3>
+                <p data-en="Attentive staff dedicated to your satisfaction" data-en="ւշադիր աննակազմ՝ նվիրված ձեր բավարարվածությանը">Ուշադիր անձնակազմ նվիրված ձեր բավարարվածությանը</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header">
+            <h2 class="section-title" data-en="What Our Guests Say" data-am="նչ են ասում մեր հյուրերը">Ինչ են ասում մեր հյուրերը</h2>
+            <p class="section-subtitle" data-en="Real experiences from our valued customers" data-en="Իրական փորձառություններ մեր սիրելի հաճախորդներից">Իրական փորձառություններ մեր սիրելի հաախորդներից</p>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text" data-en="An absolutely unforgettable dining experience! The ribeye steak was cooked to perfection, and the service was impeccable. This is now our go-to place for special celebrations." data-am="Ապշեցուցիչ անմոռանալի ճաշկերույթ! Ռիբայ սթեյքը պատրաստված էր կատարյալ, և սպասարկումը անթերի էր: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:">Ապշեցուցիչ անմոռանալի ճաշկերույթ! Ռիբայ սթեյքը պատրաստված էր կատարյալ, և սպասարկումը անթերի էր: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" alt="Customer">
+                    <div class="testimonial-author-info">
+                        <h4>Robert Anderson</h4>
+                        <p data-en="Food Critic" data-am="Սննդի քննադատ">Սննդի քննադատ</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Menu Item 2 -->
-            <div class="menu-item" data-category="mains">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800" alt="Grilled Steak">
-                    <span class="menu-badge" data-en="Chef's Special" data-am="Շեֆի ընտրություն">Շեֆի ընտրություն</span>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Premium Ribeye Steak" data-am="Պրեմիում Ռիբայ Սթեյք">Պրեմիում Ռիբայ Սթեյք</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$45</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Prime aged ribeye grilled to perfection, served with truffle mashed potatoes and seasonal vegetables." data-am="Իդեալական խորոված պրայմ տարիքային ռիբայ՝ մատուցվում է տրյուֆելով կարտոֆիլի պյուրեի և սեզոնային բանջարեղենի հետ:">Իդեալական խորոված պրայմ տարիքային ռիբայ՝ մատուցվում է տրյուֆելով կարտոֆիլի պյուրեի և սեզոնային բանջարեղենի հետ:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 35 min</span>
-                        <button class="order-btn" onclick="orderItem('Premium Ribeye Steak')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
+                <p class="testimonial-text" data-en="The seafood pasta was divine! Every ingredient was fresh and perfectly balanced. The ambiance is romantic and the staff made us feel like royalty. Highly recommend!" data-am="Ծովամթերքով պաստան աստվածային էր! Յուրաքանչյուր բաղադրիչ թարմ և կատարյալ հավասարակշռված էր: Մթնոլորտը ոմանտիկ է, և անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:">Ծովամթերքով պաստան աստվածային էր! Յուրաքանչյուր բաղադրիչ թարմ և կատարյալ հավասարակշռված էր: Մթնոլորտը ռոմանտիկ է, և անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" alt="Customer">
+                    <div class="testimonial-author-info">
+                        <h4>Sarah Mitchell</h4>
+                        <p data-en="Regular Guest" data-am="Մշտական հյուր">Մշտական հյուր</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Menu Item 3 -->
-            <div class="menu-item" data-category="mains">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800" alt="Seafood Pasta">
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Mediterranean Seafood Pasta" data-am="Միջերկրածովյան ծովամթերքով պաստա">Միջերկրածովյան ծովամթերքով պաստա</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$32</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Fresh linguine with prawns, mussels, clams in a white wine garlic sauce with cherry tomatoes." data-am="Թարմ լինգվինի՝ ծովախեցգետիններով, միդիաներով և խեցգետիններով՝ սպիտակ գինու և սխտորի սոուսով, չերի լոլիկներով:">Թարմ լինգվինի՝ ծովախեցգետիններով, միդիաներով և խեցգետիններով՝ սպիտակ գինու և սխտորի սոուսով, չերի լոլիկներով:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 25 min</span>
-                        <button class="order-btn" onclick="orderItem('Mediterranean Seafood Pasta')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Menu Item 4 -->
-            <div class="menu-item" data-category="appetizers">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800" alt="Salmon">
-                </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Seared Salmon" data-am="Խորոված սաղմոն">Խորոված սաղմոն</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$18</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Perfectly seared Atlantic salmon with lemon butter sauce, asparagus, and quinoa." data-am="Իդեալական խորոված ատլանտյան սաղմոն՝ կիտրոնային կարագի սոուսով, սպարժով և քինոայով:">Իդեալական խորոված ատլանտյան սաղմոն՝ կիտրոնային կարագի սոուսով, սպարժով և քինոայով:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 20 min</span>
-                        <button class="order-btn" onclick="orderItem('Seared Salmon')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Menu Item 5 -->
-            <div class="menu-item" data-category="desserts">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800" alt="Chocolate Cake">
-                    <span class="menu-badge" data-en="Sweet" data-am="Քաղցր">Քաղցր</span>
-                </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Molten Chocolate Cake" data-am="Հալած շոկոլադե տորթ">Հալած շոկոլադե տորթ</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$14</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Warm chocolate lava cake with a gooey center, served with vanilla bean ice cream." data-am="Տաք շոկոլադե լավա տորթ՝ հալած կենտրոնով, մատուցվում է վանիլային պաղպաղակի հետ:">Տաք շոկոլադե լավա տորթ՝ հալած կենտրոնով, մատուցվում է վանիլային պաղպաղակի հետ:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 15 min</span>
-                        <button class="order-btn" onclick="orderItem('Molten Chocolate Cake')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Menu Item 6 -->
-            <div class="menu-item" data-category="beverages">
-                <div class="menu-item-image">
-                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800" alt="Cocktail">
-                </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-header">
-                        <div>
-                            <h3 class="menu-item-title" data-en="Signature Mojito" data-am="Հեղինակային Մոխիտո">Հեղինակային Մոխիտո</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <span class="menu-item-price">$11</span>
-                    </div>
-                    <p class="menu-item-description" data-en="Refreshing blend of white rum, fresh mint, lime juice, sugar, and soda water." data-am="Զովացուցիչ խառնուրդ՝ սպիտակ ռոմից, թարմ անանուխից, լայմի հյութից, շաքարից և գազավորված ջրից:">Զովացուցիչ խառնուրդ՝ սպիտակ ռոմից, թարմ անանուխից, լայմի հյութից, շաքարից և գազավորված ջրից:</p>
-                    <div class="menu-item-footer">
-                        <span><i class="fas fa-clock"></i> 5 min</span>
-                        <button class="order-btn" onclick="orderItem('Signature Mojito')" data-en="Order Now" data-am="Պատվիրել">Պատվիրել</button>
+                <p class="testimonial-text" data-en="We celebrated our anniversary here and it exceeded all expectations. The chocolate lava cake is a must-try! Thank you for making our evening so special." data-am="ենք նշեցինք մեր տարեդարձը այստեղ և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե ավա տորթը պարտադիր է փորձել! Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:">ենք նշեցինք մեր տարեդարձը այստեղ և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե լավա տորթը պարտադիր է փորձել! Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200" alt="Customer">
+                    <div class="testimonial-author-info">
+                        <h4>Michael & Emma</h4>
+                        <p data-en="Anniversary Celebration" data-am="Տարեդարձի տոնակատարություն">Տարեդարձի տոնակատարություն</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Chef Story Section -->
-    <section class="chef-story" id="chef">
-        <h2 class="section-title" data-en="Meet Our Chef" data-am="Ծանոթացեք մեր շեֆին">Ծանոթացեք մեր շեֆին</h2>
-        <p class="section-subtitle" data-en="A passion for culinary excellence" data-am="Խոհարարական գերազանցության կիրք">Խոհարարական գերազանցության կիրք</p>
-        
-        <div class="chef-content">
-            <div class="chef-image">
-                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800" alt="Chef">
+    <!-- Reservation Section -->
+    <section class="reservation" id="reservation">
+        <div class="reservation-container">
+            <div class="reservation-image"></div>
+            <div class="reservation-content">
+                <h2 data-en="Book a Table" data-am="Ամրագրել սեղան">Ամրագրել սեղան</h2>
+                <p data-en="Reserve your spot for an unforgettable dining experience" data-am="Ամրագրեք ձեր տեղը անմոռանալի ճաշկերույթի համար">Ամրագրեք ձեր տեղը անմոռանալի ճաշկերույթի համար</p>
+                
+                <form id="reservationForm" onsubmit="handleReservation(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-en="Name" data-am="Անուն">Անուն</label>
+                            <input type="text" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Phone" data-am="Հեռախոս">Հեռախոս</label>
+                            <input type="tel" required placeholder="+1 234 567 890">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-en="Date" data-am="Ամսաթիվ">Ամսաթիվ</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Time" data-am="Ժամ">Ժամ</label>
+                            <select required>
+                                <option value="">Select time</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-en="Guests" data-am="Հյուրեր">Հյուրեր</label>
+                            <select required>
+                                <option value="">Number of guests</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6+">6+ People</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Occasion" data-am="Առիթ">Առիթ</label>
+                            <select>
+                                <option value="">Select occasion</option>
+                                <option value="birthday" data-en="Birthday" data-am="Ծնունդ">Ծնունդ</option>
+                                <option value="anniversary" data-en="Anniversary" data-am="արեդարձ">արեդարձ</option>
+                                <option value="business" data-en="Business" data-am="Գործնական">Գործնական</option>
+                                <option value="other" data-en="Other" data-am="Այլ">Այլ</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-en="Special Requests" data-am="Հատուկ խնդրանքներ">Հատուկ խնդրանքներ</label>
+                        <textarea rows="3" placeholder="Any dietary restrictions or special requests..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" data-en="Confirm Reservation" data-am="Հաստատել ամրագրումը">Հաստատել ամրագրումը</button>
+                </form>
             </div>
-            <div class="chef-text">
-                <h3 data-en="Chef Alexander" data-am="Շեֆ Ալեքսանդր">Շեֆ Ալեքսանդր</h3>
-                <p data-en="With over 20 years of culinary experience across Europe and Asia, Chef Alexander brings a unique fusion of flavors to every dish. His passion for using the freshest local ingredients combined with traditional techniques creates an unforgettable dining experience." data-am="Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ:">Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ:</p>
-                <p data-en="Every plate that leaves our kitchen tells a story of dedication, creativity, and love for the culinary arts." data-am="Մեր խոհանոցից դուրս եկող յուրաքանչյուր ափսե պատմում է նվիրվածության, ստեղծագործականության և խոհարարական արվեստի հանդեպ սիրո մասին:">Մեր խոհանոցից դուրս եկող յուրաքանչյուր ափսե պատմում է նվիրվածության, ստեղծագործականության և խոհարարական արվեստի հանդեպ սիրո մասին:</p>
-                <p class="chef-signature" data-en="— Chef Alexander, Executive Chef" data-am="— Շեֆ Ալեքսանդր, Գլխավոր շեֆ">— Շեֆ Ալեքսանդր, Գլխավոր շեֆ</p>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section class="chef-section" id="chef">
+        <div class="chef-container">
+            <div class="chef-image">
+                <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=800" alt="Chef Alexander">
+                <div class="chef-badge">
+                    <span class="years">20+</span>
+                    <span class="text" data-en="Years of<br>Experience" data-am="Տարիների<br>փորձ">արիների<br>փորձ</span>
+                </div>
+            </div>
+            <div class="chef-content">
+                <h2 data-en="Meet Our Executive Chef" data-am="Ծանոթացեք մեր գլխավոր եֆին">Ծանոթացեք մեր գլխավոր շեֆին</h2>
+                <h3 data-en="Chef Alexander Morrison" data-am="Շեֆ Ալեքսանդր Մորիսոն">Շեֆ Ալեքսանդր Մորիսոն</h3>
+                <p data-en="With over 20 years of culinary experience across Europe and Asia, Chef Alexander brings a unique fusion of flavors to every dish. Trained in Michelin-starred restaurants in Paris and Tokyo, he combines classical techniques with innovative presentations." data-am="Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորել է Փարիզի և Տոկիոյի Միշելեն աստղանիշ ռեստորաններում, նա համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:">Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորել է Փարիզի և ոկիոյի Միշելեն աստղանիշ ռեստորաններում, նա համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:</p>
+                <p data-en="His passion for using the freshest local ingredients combined with traditional techniques creates an unforgettable dining experience that keeps our guests coming back." data-am="Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին վերադառնալ:">Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին վերադառնալ:</p>
+                <div class="chef-signature">
+                    <div class="signature-img">Alexander Morrison</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery">
-        <h2 class="section-title" data-en="Food Gallery" data-am="Ուտեստների պատկերասրահ">Ուտեստների պատկերասրահ</h2>
-        <p class="section-subtitle" data-en="A visual journey through our culinary creations" data-am="Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով">Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով</p>
+    <section class="gallery" id="gallery">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Food Gallery" data-am="Ուտեստների պատկերասրահ">Ուտեստների պատկերասրահ</h2>
+            <p class="section-subtitle" data-en="A visual journey through our culinary creations" data-am="Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով">եսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով</p>
+        </div>
         
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" alt="Food 1">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus"></i>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Gallery Image" id="lightboxImg">
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Get In Touch" data-am="Կապվեք մեզ հետ">Կապվեք մեզ հետ</h2>
+            <p class="section-subtitle" data-en="We'd love to hear from you" data-am="Սիրով կսպասենք ձեր կապին">Սիրով կսպասենք ձեր կապին</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3 data-en="Contact Information" data-am="Կապի տվյալներ">Կապի տվյալներ</h3>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-en="Address" data-am="Հասցե">Հասցե</h4>
+                            <p>123 Gourmet Street, Culinary District<br>Yerevan, Armenia 0010</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-en="Phone" data-am="Հեռախոս">Հեռախոս</h4>
+                            <p>+374 10 123456<br>+374 91 123456</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4 data-en="Email" data-am="Էլ. հասցե">Էլ. հասցե</h4>
+                            <p>info@gourmetdelights.am<br>reservations@gourmetdelights.am</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-hours">
+                    <h4 data-en="Opening Hours" data-am="Աշխատանքային ժամեր">Աշխատանքային ժամեր</h4>
+                    <div class="hours-item">
+                        <span data-en="Monday - Friday" data-am="Երկուշաբթի - Ուրբաթ">Երկուշաբթի - Ուրբաթ</span>
+                        <span>12:00 PM - 11:00 PM</span>
+                    </div>
+                    <div class="hours-item">
+                        <span data-en="Saturday - Sunday" data-am="Շաբաթ - Կիրակի">աբաթ - Կիրակի</span>
+                        <span>11:00 AM - 12:00 AM</span>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600" alt="Food 2">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus"></i>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600" alt="Food 3">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus"></i>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600" alt="Food 4">
-                <div class="gallery-overlay">
-                    <i class="fas fa-search-plus"></i>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3 data-en="Find Us Here" data-am="Գտեք մեզ այստեղ">Գտեք մեզ այստեղ</h3>
+                    <p>Interactive map would be displayed here</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <h2 class="logo">Gourmet<span>Delights</span></h2>
-            <p data-en="Experience the finest cuisine in an elegant atmosphere" data-am="Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում">Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">Gourmet<span>Delights</span></a>
+                    <p data-en="Experience the finest cuisine in an elegant atmosphere. Where every meal becomes a cherished memory." data-am="Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում: Որտեղ յուրաքանչյուր ճաշկերույթ դառնում է թանկ հիշողություն:">Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում: Որտեղ յուրաքանչյուր ճաշկերույթ դառնում է թանկ հիշողություն:</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 data-en="Quick Links" data-am="Արագ հղումներ">Արագ հղումներ</h4>
+                    <ul>
+                        <li><a href="#home" data-en="Home" data-am="Գլխավոր">լխավոր</a></li>
+                        <li><a href="#about" data-en="About Us" data-am="Մեր մասին">Մեր մասին</a></li>
+                        <li><a href="#menu" data-en="Our Menu" data-am="եր մենյուն">Մեր մենյուն</a></li>
+                        <li><a href="#reservation" data-en="Reservations" data-am="Ամրագրումներ">Ամրագրումներ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 data-en="Services" data-am="առայություններ">Ծառայություններ</h4>
+                    <ul>
+                        <li><a href="#" data-en="Private Dining" data-am="ասնավոր ճաշկերույթ">Մասնավոր ճաշկերույթ</a></li>
+                        <li><a href="#" data-en="Catering" data-am="եյթերինգ">Քեյթերինգ</a></li>
+                        <li><a href="#" data-en="Events" data-am="Միջոցառումներ">Միջոցառումներ</a></li>
+                        <li><a href="#" data-en="Gift Cards" data-am="Նվեր քարտեր">Նվեր քարտեր</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 data-en="Newsletter" data-am="Տեղեկատու">Տեղեկատու</h4>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem;" data-en="Subscribe for special offers" data-am="Բաժանորդագրվեք հատուկ առաջարկների համար">Բաժանորդագրվեք հատուկ առաջարկների համար</p>
+                    <form style="display: flex;">
+                        <input type="email" placeholder="Email" style="padding: 0.8rem; border: none; border-radius: 5px 0 0 5px; flex: 1;">
+                        <button type="submit" style="padding: 0.8rem 1.2rem; background: var(--primary-color); border: none; border-radius: 0 5px 5px 0; color: white; cursor: pointer;">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-            <p>&copy; 2026 Gourmet Delights. All rights reserved.</p>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Gourmet Delights. <span data-en="All rights reserved." data-am="Բոլոր րավունքները պաշտպանված են:">Բոլոր իրավունքները պաշտպանված են:</span></p>
+            </div>
         </div>
     </footer>
 
-    <!-- Order Modal -->
-    <div class="modal" id="orderModal">
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Order/Reservation Modal -->
+    <div class="modal" id="successModal">
         <div class="modal-content">
-            <h3 data-en="Order Placed Successfully!" data-am="Պատվերը հաջողությամբ կատարված է:">Պատվերը հաջողությամբ կատարված է:</h3>
-            <p id="orderMessage">Thank you for your order!</p>
-            <button class="close-modal" onclick="closeModal()" data-en="Close" data-am="Փակել">Փակել</button>
+            <div class="modal-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 id="modalTitle">Success!</h3>
+            <p id="modalMessage">Your request has been submitted successfully.</p>
+            <button class="close-modal" onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <script>
-        // Language Translation Data
-        const translations = {
-            en: {
-                'home': 'Home',
-                'menu': 'Menu',
-                'chef': 'Our Chef',
-                'gallery': 'Gallery',
-                'contact': 'Contact',
-                'hero-title': 'Exquisite Culinary Experience',
-                'hero-subtitle': 'Savor the art of fine dining with our carefully crafted dishes',
-                'hero-cta': 'Explore Our Menu',
-                'menu-title': 'Our Menu',
-                'menu-subtitle': 'Discover our signature dishes prepared with passion and precision',
-                'cat-all': 'All',
-                'cat-appetizers': 'Appetizers',
-                'cat-mains': 'Main Course',
-                'cat-desserts': 'Desserts',
-                'cat-beverages': 'Beverages',
-                'chef-title': 'Meet Our Chef',
-                'chef-subtitle': 'A passion for culinary excellence',
-                'gallery-title': 'Food Gallery',
-                'gallery-subtitle': 'A visual journey through our culinary creations',
-                'footer-text': 'Experience the finest cuisine in an elegant atmosphere',
-                'order-success': 'Order Placed Successfully!',
-                'close': 'Close',
-                'popular': 'Popular',
-                'chef-special': "Chef's Special",
-                'sweet': 'Sweet',
-                'order-now': 'Order Now'
+        // Menu Data
+        const menuItems = [
+            {
+                id: 1,
+                category: 'appetizers',
+                image: 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=800',
+                title: { en: 'Classic Bruschetta', am: 'ասական Բրուսկետա' },
+                price: 12,
+                rating: 5,
+                description: { 
+                    en: 'Toasted bread topped with fresh tomatoes, basil, garlic, and extra virgin olive oil. A taste of Italy in every bite.',
+                    am: 'Խորոված հաց՝ արմ լոլիկներով, ռեհանով, սխտորով և լրացուցիչ կուսական ձիթաձեթով: Իտալիայի համը յուրաքանչյուր պատառում:'
+                },
+                time: '15 min',
+                badge: { en: 'Popular', am: 'Հիթ' }
             },
-            am: {
-                'home': 'Գլխավոր',
-                'menu': 'Մենյու',
-                'chef': 'Մեր խոհարարը',
-                'gallery': 'Պատկերասրահ',
-                'contact': 'Կապ',
-                'hero-title': 'Բացառիկ խոհարարական փորձառություն',
-                'hero-subtitle': 'Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով',
-                'hero-cta': 'Դիտել մեր մենյուն',
-                'menu-title': 'Մեր Մենյուն',
-                'menu-subtitle': 'Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ',
-                'cat-all': 'Բոլորը',
-                'cat-appetizers': 'Նախուտեստներ',
-                'cat-mains': 'Հիմնական ուտեստներ',
-                'cat-desserts': 'Անուշեղեն',
-                'cat-beverages': 'Խմիչքներ',
-                'chef-title': 'Ծանոթացեք մեր շեֆին',
-                'chef-subtitle': 'Խոհարարական գերազանցության կիրք',
-                'gallery-title': 'Ուտեստների պատկերասրահ',
-                'gallery-subtitle': 'Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով',
-                'footer-text': 'Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում',
-                'order-success': 'Պատվերը հաջողությամբ կատարված է:',
-                'close': 'Փակել',
-                'popular': 'Հիթ',
-                'chef-special': 'Շեֆի ընտրություն',
-                'sweet': 'Քաղցր',
-                'order-now': 'Պատվիրել'
+            {
+                id: 2,
+                category: 'mains',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800',
+                title: { en: 'Premium Ribeye Steak', am: 'Պրեմիում Ռիբայ Սթեյք' },
+                price: 45,
+                rating: 5,
+                description: {
+                    en: 'Prime aged ribeye grilled to perfection, served with truffle mashed potatoes and seasonal vegetables.',
+                    am: 'Իդեալական խորոված պրայմ տարիքային ռիբայ՝ մատուցվում է տրյուֆելով կարտոֆիլի պյուրեի և սեզոնային բանջարեղենի հետ:'
+                },
+                time: '35 min',
+                badge: { en: "Chef's Special", am: 'Շեֆի ընտրություն' }
+            },
+            {
+                id: 3,
+                category: 'seafood',
+                image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800',
+                title: { en: 'Mediterranean Seafood Pasta', am: 'Միջերկրածովյան ծովամթերքով պաստա' },
+                price: 32,
+                rating: 4.5,
+                description: {
+                    en: 'Fresh linguine with prawns, mussels, clams in a white wine garlic sauce with cherry tomatoes.',
+                    am: 'Թարմ լինգվինի ծովախեցգետիններով, միդիաներով և խեցգետիններով՝ սպիտակ գինու և սխտորի սոուսով, չերի լոլիկներով:'
+                },
+                time: '25 min',
+                badge: null
+            },
+            {
+                id: 4,
+                category: 'seafood',
+                image: 'https://images.unsplash.com/photo-1467003909585-2f8a7270d288?w=800',
+                title: { en: 'Seared Salmon', am: 'Խորոված սաղմոն' },
+                price: 28,
+                rating: 5,
+                description: {
+                    en: 'Perfectly seared Atlantic salmon with lemon butter sauce, asparagus, and quinoa.',
+                    am: 'Իդեալական խորոված ատլանտյան սաղմոն՝ կիտրոնային կարագի սոուսով, սպարժով և քինոայով:'
+                },
+                time: '20 min',
+                badge: null
+            },
+            {
+                id: 5,
+                category: 'desserts',
+                image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800',
+                title: { en: 'Molten Chocolate Cake', am: 'Հալած շոկոլադե տորթ' },
+                price: 14,
+                rating: 5,
+                description: {
+                    en: 'Warm chocolate lava cake with a gooey center, served with vanilla bean ice cream.',
+                    am: 'Տաք շոկոլադե ավա տորթ՝ հալած կենտրոնով, մատուցվում է վանիլային պաղպաղակի հետ:'
+                },
+                time: '15 min',
+                badge: { en: 'Sweet', am: 'Քաղցր' }
+            },
+            {
+                id: 6,
+                category: 'beverages',
+                image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800',
+                title: { en: 'Signature Mojito', am: 'Հեղինակային Մոխիտո' },
+                price: 11,
+                rating: 5,
+                description: {
+                    en: 'Refreshing blend of white rum, fresh mint, lime juice, sugar, and soda water.',
+                    am: 'Զովացուցիչ խառնուրդ՝ սպիտակ ռոմից, թարմ անանուխից, լայմի հյութից, շաքարից և գազավորված ջրից:'
+                },
+                time: '5 min',
+                badge: null
+            },
+            {
+                id: 7,
+                category: 'appetizers',
+                image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800',
+                title: { en: 'Beef Carpaccio', am: 'Տավարի կարպաչչո' },
+                price: 18,
+                rating: 4.5,
+                description: {
+                    en: 'Thinly sliced raw beef with arugula, parmesan, capers, and truffle aioli.',
+                    am: 'Բարակ կտրատած հում տավարի միս՝ ռուկոլայով, պարմեզանով, կապարիսով և տրյուֆելային աիոլիով:'
+                },
+                time: '10 min',
+                badge: null
+            },
+            {
+                id: 8,
+                category: 'mains',
+                image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800',
+                title: { en: 'Grilled Lamb Chops', am: 'Խորոված գառան կոտլետներ' },
+                price: 38,
+                rating: 5,
+                description: {
+                    en: 'Herb-crusted lamb chops with mint pesto, roasted vegetables, and red wine reduction.',
+                    am: 'ոտաբույսերով գառան կոտլետներ՝ անանուխի պեստոյով, խորոված բանջարեղենով և կարմիր գինու սոուսով:'
+                },
+                time: '30 min',
+                badge: { en: 'Popular', am: 'Հիթ' }
             }
-        };
+        ];
+
+        // Gallery Images
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600',
+            'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600',
+            'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600',
+            'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600',
+            'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600',
+            'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600',
+            'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600',
+            'https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600'
+        ];
 
         let currentLang = 'en';
 
+        // Initialize
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+            
+            renderMenu('all');
+            renderGallery();
+            setupScrollAnimations();
+        });
+
         // Language Switcher
-        const langBtns = document.querySelectorAll('.lang-btn');
-        
-        langBtns.forEach(btn => {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const lang = btn.getAttribute('data-lang');
                 currentLang = lang;
                 
-                // Update active button
-                langBtns.forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
-                // Update all translatable elements
                 updateLanguage(lang);
             });
         });
 
         function updateLanguage(lang) {
-            // Update all elements with data-en and data-am attributes
-            const elements = document.querySelectorAll('[data-en]');
-            elements.forEach(el => {
+            document.querySelectorAll('[data-en]').forEach(el => {
                 const text = el.getAttribute(`data-${lang}`);
                 if (text) {
-                    el.textContent = text;
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        if (el.placeholder) {
+                            // Keep placeholders as is or update if needed
+                        }
+                    } else {
+                        el.textContent = text;
+                    }
                 }
+            });
+            
+            // Re-render menu and gallery with new language
+            const activeCategory = document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all';
+            renderMenu(activeCategory);
+        }
+
+        // Menu Rendering
+        function renderMenu(category) {
+            const menuGrid = document.getElementById('menuGrid');
+            menuGrid.innerHTML = '';
+            
+            const filteredItems = category === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+            
+            filteredItems.forEach((item, index) => {
+                const stars = Array(5).fill(0).map((_, i) => 
+                    i < Math.floor(item.rating) ? '<i class="fas fa-star"></i>' : 
+                    i < item.rating ? '<i class="fas fa-star-half-alt"></i>' : 
+                    '<i class="far fa-star"></i>'
+                ).join('');
+                
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.style.animationDelay = `${index * 0.1}s`;
+                menuItem.innerHTML = `
+                    <div class="menu-item-image">
+                        <img src="${item.image}" alt="${item.title[currentLang]}">
+                        ${item.badge ? `<span class="menu-badge">${item.badge[currentLang]}</span>` : ''}
+                    </div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <div>
+                                <h3 class="menu-item-title">${item.title[currentLang]}</h3>
+                                <div class="rating">${stars}</div>
+                            </div>
+                            <span class="menu-item-price">$${item.price}</span>
+                        </div>
+                        <p class="menu-item-description">${item.description[currentLang]}</p>
+                        <div class="menu-item-footer">
+                            <span class="prep-time"><i class="fas fa-clock"></i> ${item.time}</span>
+                            <button class="order-btn" onclick="orderItem('${item.title[currentLang]}')">${currentLang === 'en' ? 'Order Now' : 'Պատվիրել'}</button>
+                        </div>
+                    </div>
+                `;
+                
+                menuGrid.appendChild(menuItem);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    menuItem.classList.add('show');
+                }, 100);
             });
         }
 
         // Category Filter
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        categoryBtns.forEach(btn => {
+        document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
+                
                 const category = btn.getAttribute('data-category');
-
-                menuItems.forEach(item => {
-                    if (category === 'all' || item.getAttribute('data-category') === category) {
-                        item.style.display = 'block';
-                        item.style.animation = 'fadeInUp 0.5s ease';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+                renderMenu(category);
             });
         });
 
-        // Order Function
-        function orderItem(itemName) {
-            const modal = document.getElementById('orderModal');
-            const message = document.getElementById('orderMessage');
-            const successText = currentLang === 'en' ? 'You have ordered' : 'Դուք պատվիրեցիք';
-            message.textContent = `${successText}: ${itemName}. ${currentLang === 'en' ? 'We will prepare it fresh for you!' : 'Մենք այն թարմ կպատրաստենք ձեզ համար!'}`;
-            modal.classList.add('active');
+        // Gallery Rendering
+        function renderGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryImages.forEach((img, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `
+                    <img src="${img}" alt="Gallery Image ${index + 1}" onclick="openLightbox('${img}')">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                `;
+                galleryGrid.appendChild(galleryItem);
+            });
         }
 
-        // Close Modal
+        // Lightbox
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Order Function
+        function orderItem(itemName) {
+            showModal(
+                currentLang === 'en' ? 'Order Placed!' : 'ատվերը կատարված է!',
+                `${currentLang === 'en' ? 'You have ordered' : 'ուք պատվիրեցիք'}: ${itemName}. ${currentLang === 'en' ? 'We will prepare it fresh for you!' : 'Մենք այն թարմ կպատրաստենք ձեզ համար!'}`
+            );
+        }
+
+        // Reservation Handler
+        function handleReservation(e) {
+            e.preventDefault();
+            showModal(
+                currentLang === 'en' ? 'Reservation Confirmed!' : 'Ամրագրումը հաստատված է!',
+                currentLang === 'en' 
+                    ? 'Thank you for your reservation. We will contact you shortly to confirm.'
+                    : 'նորհակալություն ձեր ամրագրման համար: Մենք շուտով կկապվենք ձեզ հետ հաստատման համար:'
+            );
+            document.getElementById('reservationForm').reset();
+        }
+
+        // Modal Functions
+        function showModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('successModal').classList.add('active');
+        }
+
         function closeModal() {
-            document.getElementById('orderModal').classList.remove('active');
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // Scroll Effects
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const scrollTop = document.getElementById('scrollTop');
+            
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                scrollTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Scroll Animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.menu-item, .testimonial-card, .feature-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         }
 
         // Close modal on outside click
         window.onclick = function(event) {
-            const modal = document.getElementById('orderModal');
+            const modal = document.getElementById('successModal');
             if (event.target == modal) {
-                modal.classList.remove('active');
+                closeModal();
             }
         }
 
-        // Smooth Scroll
+        // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1012,16 +2273,6 @@
                     });
                 }
             });
-        });
-
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-            } else {
-                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            }
         });
     </script>
 </body>
