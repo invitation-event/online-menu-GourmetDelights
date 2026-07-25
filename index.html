@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet Delights - Fine Dining Experience</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Gourmet Delights - Նրբաճաշակ Խոհանոց</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -177,6 +177,19 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--secondary-color);
+            z-index: 1002;
+        }
+
+        .mobile-menu-close {
+            display: none;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--secondary-color);
         }
 
         /* Language Switcher */
@@ -211,6 +224,7 @@
         .hero {
             margin-top: 0;
             height: 100vh;
+            min-height: 600px;
             background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
                         url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1920') center/cover;
             background-attachment: fixed;
@@ -489,6 +503,7 @@
             font-weight: 600;
             transition: all 0.3s;
             font-size: 1rem;
+            white-space: nowrap;
         }
 
         .category-btn:hover,
@@ -501,7 +516,7 @@
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
         }
 
@@ -830,6 +845,7 @@
             border-radius: 10px;
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s;
+            min-height: 48px; /* Mobile touch target */
         }
 
         .form-group input:focus,
@@ -857,6 +873,7 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 52px;
         }
 
         .submit-btn:hover {
@@ -1260,83 +1277,6 @@
             }
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content h1 {
-                font-size: 3.5rem;
-            }
-
-            .about-container,
-            .chef-container,
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .reservation-container {
-                grid-template-columns: 1fr;
-            }
-
-            .reservation-image {
-                height: 300px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .about-images {
-                grid-template-columns: 1fr;
-            }
-
-            .about-img.large {
-                grid-row: span 1;
-            }
-
-            .about-features {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* Modal */
         .modal {
             display: none;
@@ -1400,6 +1340,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             transition: all 0.3s;
+            min-height: 48px;
         }
 
         .close-modal:hover {
@@ -1437,6 +1378,217 @@
             background: var(--gold);
             transform: translateY(-5px);
         }
+
+        /* ================= MOBILE RESPONSIVE ================= */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .about-container,
+            .chef-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .reservation-container {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation-image {
+                height: 300px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn,
+            .mobile-menu-close {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 85%;
+                max-width: 350px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1001;
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                width: 100%;
+                padding: 0.5rem 0;
+            }
+
+            .lang-switcher {
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .lang-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .nav-cta {
+                width: 100%;
+                text-align: center;
+                margin-top: 1rem;
+            }
+
+            .hero {
+                background-attachment: scroll; /* Fix for iOS */
+                min-height: 500px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .menu-categories {
+                justify-content: flex-start;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 1rem;
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-x;
+                scrollbar-width: none; /* Firefox */
+            }
+
+            .menu-categories::-webkit-scrollbar {
+                display: none; /* Chrome/Safari */
+            }
+
+            .category-btn {
+                flex-shrink: 0;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-images {
+                grid-template-columns: 1fr;
+            }
+
+            .about-img.large {
+                grid-row: span 1;
+            }
+
+            .about-img img {
+                height: 250px;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .chef-image img {
+                height: 400px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .lightbox img {
+                max-width: 95%;
+                max-height: 80%;
+            }
+
+            .lightbox-close {
+                top: 20px;
+                right: 20px;
+                font-size: 2.5rem;
+            }
+
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+
+            .reservation-content {
+                padding: 2rem 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1452,14 +1604,17 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Gourmet<span>Delights</span></a>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Բացել մենյուն">
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-links" id="navLinks">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Փակել մենյուն">
+                    <i class="fas fa-times"></i>
+                </button>
                 <li><a href="#home" data-en="Home" data-am="Գլխավոր">Գլխավոր</a></li>
                 <li><a href="#about" data-en="About" data-am="Մեր մասին">Մեր մասին</a></li>
                 <li><a href="#menu" data-en="Menu" data-am="Մենյու">Մենյու</a></li>
-                <li><a href="#chef" data-en="Chef" data-am="Շեֆ">Շեֆ</a></li>
+                <li><a href="#chef" data-en="Chef" data-am="Գլխավոր խոհարար">Գլխավոր խոհարար</a></li>
                 <li><a href="#gallery" data-en="Gallery" data-am="Պատկերասրահ">Պատկերասրահ</a></li>
                 <li><a href="#reservation" data-en="Reservation" data-am="Ամրագրում">Ամրագրում</a></li>
                 <li><a href="#contact" data-en="Contact" data-am="Կապ">Կապ</a></li>
@@ -1478,8 +1633,8 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-badge" data-en="★ Award Winning Restaurant ★" data-am="★ Մրցանակակիր ռեստորան ★">★ Մրցանակակիր ռեստորան ★</div>
-            <h1 data-en="Exquisite Culinary Experience" data-am="Բացառիկ խոհարարական փորձառություն">Բացառիկ խոհարարական փորձառություն</h1>
-            <p data-en="Savor the art of fine dining with our carefully crafted dishes, where every bite tells a story of passion and excellence" data-am="Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին">Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին</p>
+            <h1 data-en="Exquisite Culinary Experience" data-am="Բացառիկ խոհարարական փորձ">Բացառիկ խոհարարական փորձ</h1>
+            <p data-en="Savor the art of fine dining with our carefully crafted dishes, where every bite tells a story of passion and excellence." data-am="Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին:">Վայելեք նրբաճաշակության արվեստը մեր խնամքով պատրաստված ուտեստներով, որտեղ յուրաքանչյուր պատառ պատմում է կրքի և գերազանցության մասին:</p>
             <div class="hero-buttons">
                 <a href="#menu" class="cta-button" data-en="Explore Our Menu" data-am="Դիտել մենյուն">Դիտել մենյուն</a>
                 <a href="#reservation" class="cta-button secondary" data-en="Reserve a Table" data-am="Ամրագրել սեղան">Ամրագրել սեղան</a>
@@ -1505,9 +1660,9 @@
                 </div>
             </div>
             <div class="about-content">
-                <h2 data-en="Our Story" data-am="Մեր պատմությունը">Մերպատմությունը</h2>
-                <p data-en="Founded in 2010, Gourmet Delights has been at the forefront of culinary excellence, bringing together the finest ingredients from local farms and international markets." data-am="Հիմնադրված 2010 թվականին, Gourmet Delights-ը եղել է խոհարարական գերազանցության առաջամարտիկ, միավորելով լավագույն բաղադրիչները տեղական ֆերմաներից և միջազգային շուկաներից:">Հիմնադրված 2010 թվականին, Gourmet Delights-ը եղել է խոհարարական գերազանցության առաջամարտիկ, միավորելով լավագույն բաղադրիչները տեղական ֆերմաներից և միջազգային շուկաներից:</p>
-                <p data-en="Our commitment to quality, creativity, and exceptional service has made us a beloved destination for food enthusiasts and special occasions alike." data-am="Մեր հանձնառությունը որակին, ստեղծագործականությանը և բացառիկ սպասարկմանը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:">Մեր հանձնառությունը որակին, ստեղծագործականությանը և բացառիկ սպասարկմանը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:</p>
+                <h2 data-en="Our Story" data-am="Մեր Պատմությունը">Մեր Պատմությունը</h2>
+                <p data-en="Founded in 2010, Gourmet Delights has been at the forefront of culinary excellence, bringing together the finest ingredients from local farms and international markets." data-am="Հիմնադրվելով 2010 թվականին՝ Gourmet Delights-ը հանդիսանում է խոհարարական գերազանցության առաջամարտիկ, միավորելով լավագույն բաղադրիչները տեղական ֆերմաներից և միջազգային շուկաներից:">Հիմնադրվելով 2010 թվականին՝ Gourmet Delights-ը հանդիսանում է խոհարարական գերազանցության առաջամարտիկ, միավորելով լավագույն բաղադրիչները տեղական ֆերմաներից և միջազգային շուկաներից:</p>
+                <p data-en="Our commitment to quality, creativity, and exceptional service has made us a beloved destination for food enthusiasts and special occasions alike." data-am="Որակին, ստեղծագործականությանը և անթերի սպասարկմանը մեր հանձնառությունը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:">Որակին, ստեղծագործականությանը և անթերի սպասարկմանը մեր հանձնառությունը մեզ դարձրել է սիրված վայր սննդի սիրահարների և հատուկ առիթների համար:</p>
                 
                 <div class="about-features">
                     <div class="feature">
@@ -1516,7 +1671,7 @@
                         </div>
                         <div class="feature-text">
                             <h4 data-en="Fresh Ingredients" data-am="Թարմ բաղադրիչներ">Թարմ բաղադրիչներ</h4>
-                            <p data-en="Farm to table freshness" data-am="Ֆերմայից սեղան">Ֆերմայից սեղան</p>
+                            <p data-en="Farm to table freshness" data-am="Ֆերմայից՝ սեղան">Ֆերմայից՝ սեղան</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -1525,7 +1680,7 @@
                         </div>
                         <div class="feature-text">
                             <h4 data-en="Award Winning" data-am="Մրցանակակիր">Մրցանակակիր</h4>
-                            <p data-en="Best restaurant 2025" data-am="Լավագույն ռեստորան 2025">Լավագույն ռեստորան 2025</p>
+                            <p data-en="Best restaurant" data-am="Լավագույն ռեստորան">Լավագույն ռեստորան</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -1533,8 +1688,8 @@
                             <i class="fas fa-wine-glass-alt"></i>
                         </div>
                         <div class="feature-text">
-                            <h4 data-en="Fine Wines" data-am="Նրբաճաշակ գինիներ">Նրբաճաշակ գինիներ</h4>
-                            <p data-en="Curated wine selection" data-am="Ընտրված գինիներ">Ընտրված գինիներ</p>
+                            <h4 data-en="Fine Wines" data-am="Ընտիր գինիներ">Ընտիր գինիներ</h4>
+                            <p data-en="Curated wine selection" data-am="Խնամքով ընտրված գինիներ">Խնամքով ընտրված գինիներ</p>
                         </div>
                     </div>
                     <div class="feature">
@@ -1543,7 +1698,7 @@
                         </div>
                         <div class="feature-text">
                             <h4 data-en="Made with Love" data-am="Պատրաստված սիրով">Պատրաստված սիրով</h4>
-                            <p data-en="Passion in every dish" data-am="Կիրք յուրաքանչյուր ուտեստում">Կիրք յուրաքանչյուր ուտեստում</p>
+                            <p data-en="Passion in every dish" data-am="Կիրք յուրաքանչյուր ուտեստի մեջ">Կիրք յուրաքանչյուր ուտեստի մեջ</p>
                         </div>
                     </div>
                 </div>
@@ -1555,13 +1710,13 @@
     <section class="menu-section" id="menu">
         <div class="section-header">
             <h2 class="section-title" data-en="Our Menu" data-am="Մեր Մենյուն">Մեր Մենյուն</h2>
-            <p class="section-subtitle" data-en="Discover our signature dishes prepared with passion and precision" data-am="Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ">Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ</p>
+            <p class="section-subtitle" data-en="Discover our signature dishes prepared with passion and precision" data-am="Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ:">Բացահայտեք մեր ֆիրմային ուտեստները, որոնք պատրաստված են կրքով և ճշգրտությամբ:</p>
         </div>
 
         <div class="menu-categories">
-            <button class="category-btn active" data-category="all" data-en="All Dishes" data-am="Բոլոր ուտեստները">Բոլոր ուտեստները</button>
+            <button class="category-btn active" data-category="all" data-en="All" data-am="Բոլորը">Բոլորը</button>
             <button class="category-btn" data-category="appetizers" data-en="Appetizers" data-am="Նախուտեստներ">Նախուտեստներ</button>
-            <button class="category-btn" data-category="mains" data-en="Main Course" data-am="Հիմնական">Հիմնական</button>
+            <button class="category-btn" data-category="mains" data-en="Main Course" data-am="Հիմնական ուտեստներ">Հիմնական ուտեստներ</button>
             <button class="category-btn" data-category="seafood" data-en="Seafood" data-am="Ծովամթերք">Ծովամթերք</button>
             <button class="category-btn" data-category="desserts" data-en="Desserts" data-am="Անուշեղեն">Անուշեղեն</button>
             <button class="category-btn" data-category="beverages" data-en="Beverages" data-am="Խմիչքներ">Խմիչքներ</button>
@@ -1575,8 +1730,8 @@
     <!-- Why Choose Us -->
     <section class="why-us">
         <div class="section-header">
-            <h2 class="section-title" data-en="Why Choose Us" data-am="Ինչու ընտրել մեզ"> Ինչու ընտրել մեզ</h2>
-            <p class="section-subtitle" data-en="Experience the difference that makes us special" data-am="Փորձարկեք տարբերությունը, որը մեզ առանձնահատուկ է դարձնում">Փորձարկեք տարբերությունը, որը մեզ առանձնահատուկ է դարձնում</p>
+            <h2 class="section-title" data-en="Why Choose Us" data-am="Ինչու՞ ընտրել մեզ">Ինչու՞ ընտրել մեզ</h2>
+            <p class="section-subtitle" data-en="Experience the difference that makes us special" data-am="Զգացեք այն տարբերությունը, որը մեզ դարձնում է առանձնահատուկ:">Զգացեք այն տարբերությունը, որը մեզ դարձնում է առանձնահատուկ:</p>
         </div>
         
         <div class="features-grid">
@@ -1584,22 +1739,22 @@
                 <div class="feature-card-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
-                <h3 data-en="Gourmet Cuisine" data-am="Նրբաճաշակ խոհանոց">Նրբաճաշակ խոհանոց</h3>
-                <p data-en="World-class chefs creating masterpieces with the finest ingredients" data-am="Աշխարհի դասի խոհարարներ, ովքեր ստեղծում են գլուխգործոցներ լավագույն բաղադրիչներով">Աշխարհի դասի խոհարարներ, ովքեր ստեղծում են գլուխգործոցներ լավագույն բաղադրիչներով</p>
+                <h3 data-en="Gourmet Cuisine" data-am="Բարձրակարգ խոհանոց">Բարձրակարգ խոհանոց</h3>
+                <p data-en="World-class chefs creating masterpieces with the finest ingredients" data-am="Համաշխարհային կարգի խոհարարներ, ովքեր ստեղծում են գլուխգործոցներ՝ օգտագործելով լավագույն բաղադրիչները:">Համաշխարհային կարգի խոհարարներ, ովքեր ստեղծում են գլուխգործոցներ՝ օգտագործելով լավագույն բաղադրիչները:</p>
             </div>
             <div class="feature-card">
                 <div class="feature-card-icon">
                     <i class="fas fa-glass-cheers"></i>
                 </div>
                 <h3 data-en="Elegant Ambiance" data-am="Էլեգանտ մթնոլորտ">Էլեգանտ մթնոլորտ</h3>
-                <p data-en="Sophisticated atmosphere perfect for any occasion" data-am="Էլեգանտ մթնոլորտ՝ կատարյալ ցանկացած առիթի համար">Էլեգանտ մթնոլորտ՝ կատարյալ ցանկացած առիթի համար</p>
+                <p data-en="Sophisticated atmosphere perfect for any occasion" data-am="Էլեգանտ մթնոլորտ, որը կատարյալ է ցանկացած առիթի համար:">Էլեգանտ մթնոլորտ, որը կատարյալ է ցանկացած առիթի համար:</p>
             </div>
             <div class="feature-card">
                 <div class="feature-card-icon">
                     <i class="fas fa-concierge-bell"></i>
                 </div>
-                <h3 data-en="Exceptional Service" data-am="Բացառիկ սպասարկում">Բացառիկ սպասարկում</h3>
-                <p data-en="Attentive staff dedicated to your satisfaction" data-am="Ուշադիր անձնակազմ՝ նվիրված ձեր բավարարվածությանը">Ուշադիր անձնակազմ՝ նվիրված ձեր բավարարվածությանը</p>
+                <h3 data-en="Exceptional Service" data-am="Անթերի սպասարկում">Անթերի սպասարկում</h3>
+                <p data-en="Attentive staff dedicated to your satisfaction" data-am="Ուշադիր անձնակազմ, որը նվիրված է ձեր բավարարվածությանը:">Ուշադիր անձնակազմ, որը նվիրված է ձեր բավարարվածությանը:</p>
             </div>
         </div>
     </section>
@@ -1607,8 +1762,8 @@
     <!-- Testimonials -->
     <section class="testimonials">
         <div class="section-header">
-            <h2 class="section-title" data-en="What Our Guests Say" data-am="Ինչ են ասում մեր հյուրերը">Ինչ են ասում մեր հյուրերը</h2>
-            <p class="section-subtitle" data-en="Real experiences from our valued customers" data-am="Իրական փորձառություններ մեր սիրելի հաճախորդներից">Իրական փորձառություններ մեր սիրելի հաճախորդներից</p>
+            <h2 class="section-title" data-en="What Our Guests Say" data-am="Ի՞նչ են ասում մեր հյուրերը">Ի՞նչ են ասում մեր հյուրերը</h2>
+            <p class="section-subtitle" data-en="Real experiences from our valued customers" data-am="Իրական կարծիքներ մեր սիրելի հյուրերից:">Իրական կարծիքներ մեր սիրելի հյուրերից:</p>
         </div>
         
         <div class="testimonials-grid">
@@ -1620,7 +1775,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text" data-en="An absolutely unforgettable dining experience! The ribeye steak was cooked to perfection, and the service was impeccable. This is now our go-to place for special celebrations." data-am="Ապշեցուցիչ անմոռանալի ճաշկերույթ! Ռիբայ սթեյքը պատրաստված էր կատարյալ, և սպասարկումը անթերի էր: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:">Ապշեցուցիչ անմոռանալի ճաշկերույթ! Ռիբայ սթեյքը պատրաստված էր կատարյալ, և սպասարկումը անթերի էր: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:</p>
+                <p class="testimonial-text" data-en="An absolutely unforgettable dining experience! The ribeye steak was cooked to perfection, and the service was impeccable. This is now our go-to place for special celebrations." data-am="Բացարձակապես անմոռանալի ճաշկերույթ: Ռիբայ սթեյքը պատրաստված էր կատարյալ, իսկ սպասարկումը՝ անթերի: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:">Բացարձակապես անմոռանալի ճաշկերույթ: Ռիբայ սթեյքը պատրաստված էր կատարյալ, իսկ սպասարկումը՝ անթերի: Սա այժմ մեր սիրելի վայրն է հատուկ տոների համար:</p>
                 <div class="testimonial-author">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" alt="Customer">
                     <div class="testimonial-author-info">
@@ -1638,7 +1793,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text" data-en="The seafood pasta was divine! Every ingredient was fresh and perfectly balanced. The ambiance is romantic and the staff made us feel like royalty. Highly recommend!" data-am="Ծովամթերքով պաստան աստվածային էր! Յուրաքանչյուր բաղադրիչ թարմ և կատարյալ հավասարակշռված էր: Մթնոլորտը ռոմանտիկ է, և անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:">Ծովամթերքով պաստան աստվածային էր! Յուրաքանչյուր բաղադրիչ թարմ և կատարյալ հավասարակշռված էր: Մթնոլորտը ռոմանտիկ է, և անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:</p>
+                <p class="testimonial-text" data-en="The seafood pasta was divine! Every ingredient was fresh and perfectly balanced. The ambiance is romantic and the staff made us feel like royalty. Highly recommend!" data-am="Ծովամթերքով պաստան աստվածային էր: Յուրաքանչյուր բաղադրիչ թարմ էր և կատարյալ հավասարակշռված: Մթնոլորտը ռոմանտիկ էր, իսկ անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:">Ծովամթերքով պաստան աստվածային էր: Յուրաքանչյուր բաղադրիչ թարմ էր և կատարյալ հավասարակշռված: Մթնոլորտը ռոմանտիկ էր, իսկ անձնակազմը մեզ թագավորական վերաբերմունք ցուցաբերեց: Խորհուրդ եմ տալիս:</p>
                 <div class="testimonial-author">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" alt="Customer">
                     <div class="testimonial-author-info">
@@ -1656,7 +1811,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text" data-en="We celebrated our anniversary here and it exceeded all expectations. The chocolate lava cake is a must-try! Thank you for making our evening so special." data-am="Մենք նշեցինք մեր տարեդարձը այստեղ և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե լավա տորթը պարտադիր է փորձել! Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:">Մենք նշեցինք մեր տարեդարձը այստեղ և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե լավա տորթը պարտադիր է փորձել! Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:</p>
+                <p class="testimonial-text" data-en="We celebrated our anniversary here and it exceeded all expectations. The chocolate lava cake is a must-try! Thank you for making our evening so special." data-am="Մենք նշեցինք մեր տարեդարձն այստեղ, և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե լավա տորթը պարտադիր է փորձել: Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:">Մենք նշեցինք մեր տարեդարձն այստեղ, և այն գերազանցեց բոլոր սպասելիքները: Շոկոլադե լավա տորթը պարտադիր է փորձել: Շնորհակալություն մեր երեկոն այդքան հատուկ դարձնելու համար:</p>
                 <div class="testimonial-author">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200" alt="Customer">
                     <div class="testimonial-author-info">
@@ -1674,17 +1829,17 @@
             <div class="reservation-image"></div>
             <div class="reservation-content">
                 <h2 data-en="Book a Table" data-am="Ամրագրել սեղան">Ամրագրել սեղան</h2>
-                <p data-en="Reserve your spot for an unforgettable dining experience" data-am="Ամրագրեք ձեր տեղը անմոռանալի ճաշկերույթի համար">Ամրագրեք ձեր տեղը անմոռանալի ճաշկերույթի համար</p>
+                <p data-en="Reserve your spot for an unforgettable dining experience" data-am="Ամրագրեք ձեր սեղանը անմոռանալի ճաշկերույթի համար:">Ամրագրեք ձեր սեղանը անմոռանալի ճաշկերույթի համար:</p>
                 
                 <form id="reservationForm" onsubmit="handleReservation(event)">
                     <div class="form-row">
                         <div class="form-group">
                             <label data-en="Name" data-am="Անուն">Անուն</label>
-                            <input type="text" required placeholder="John Doe">
+                            <input type="text" required data-en="John Doe" data-am="Անուն Ազգանուն" placeholder="Անուն Ազգանուն">
                         </div>
                         <div class="form-group">
-                            <label data-en="Phone" data-am="Հեռախոս">Հեռախոս</label>
-                            <input type="tel" required placeholder="+1 234 567 890">
+                            <label data-en="Phone" data-am="Հեռախոսահամար">Հեռախոսահամար</label>
+                            <input type="tel" required data-en="+1 234 567 890" data-am="+374 XX XXXXXX" placeholder="+374 XX XXXXXX">
                         </div>
                     </div>
                     
@@ -1696,36 +1851,36 @@
                         <div class="form-group">
                             <label data-en="Time" data-am="Ժամ">Ժամ</label>
                             <select required>
-                                <option value="">Select time</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="13:00">1:00 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="21:00">9:00 PM</option>
+                                <option value="" data-en="Select time" data-am="Ընտրեք ժամը">Ընտրեք ժամը</option>
+                                <option value="12:00" data-en="12:00 PM" data-am="12:00">12:00</option>
+                                <option value="13:00" data-en="1:00 PM" data-am="13:00">13:00</option>
+                                <option value="18:00" data-en="6:00 PM" data-am="18:00">18:00</option>
+                                <option value="19:00" data-en="7:00 PM" data-am="19:00">19:00</option>
+                                <option value="20:00" data-en="8:00 PM" data-am="20:00">20:00</option>
+                                <option value="21:00" data-en="9:00 PM" data-am="21:00">21:00</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label data-en="Guests" data-am="Հյուրեր">Հյուրեր</label>
+                            <label data-en="Guests" data-am="Հյուրերի քանակ">Հյուրերի քանակ</label>
                             <select required>
-                                <option value="">Number of guests</option>
-                                <option value="2">2 People</option>
-                                <option value="3">3 People</option>
-                                <option value="4">4 People</option>
-                                <option value="5">5 People</option>
-                                <option value="6+">6+ People</option>
+                                <option value="" data-en="Number of guests" data-am="Հյուրերի քանակ">Հյուրերի քանակ</option>
+                                <option value="2" data-en="2 People" data-am="2 հոգի">2 հոգի</option>
+                                <option value="3" data-en="3 People" data-am="3 հոգի">3 հոգի</option>
+                                <option value="4" data-en="4 People" data-am="4 հոգի">4 հոգի</option>
+                                <option value="5" data-en="5 People" data-am="5 հոգի">5 հոգի</option>
+                                <option value="6+" data-en="6+ People" data-am="6+ հոգի">6+ հոգի</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label data-en="Occasion" data-am="Առիթ">Առիթ</label>
                             <select>
-                                <option value="">Select occasion</option>
-                                <option value="birthday" data-en="Birthday" data-am="Ծնունդ">Ծնունդ</option>
+                                <option value="" data-en="Select occasion" data-am="Ընտրեք առիթը">Ընտրեք առիթը</option>
+                                <option value="birthday" data-en="Birthday" data-am="Ծննդյան օր">Ծննդյան օր</option>
                                 <option value="anniversary" data-en="Anniversary" data-am="Տարեդարձ">Տարեդարձ</option>
-                                <option value="business" data-en="Business" data-am="Գործնական">Գործնական</option>
+                                <option value="business" data-en="Business Meeting" data-am="Գործնական հանդիպում">Գործնական հանդիպում</option>
                                 <option value="other" data-en="Other" data-am="Այլ">Այլ</option>
                             </select>
                         </div>
@@ -1733,7 +1888,7 @@
                     
                     <div class="form-group">
                         <label data-en="Special Requests" data-am="Հատուկ խնդրանքներ">Հատուկ խնդրանքներ</label>
-                        <textarea rows="3" placeholder="Any dietary restrictions or special requests..."></textarea>
+                        <textarea rows="3" data-en="Any dietary restrictions or special requests..." data-am="Սննդային սահմանափակումներ կամ հատուկ խնդրանքներ..." placeholder="Սննդային սահմանափակումներ կամ հատուկ խնդրանքներ..."></textarea>
                     </div>
                     
                     <button type="submit" class="submit-btn" data-en="Confirm Reservation" data-am="Հաստատել ամրագրումը">Հաստատել ամրագրումը</button>
@@ -1749,14 +1904,14 @@
                 <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=800" alt="Chef Alexander">
                 <div class="chef-badge">
                     <span class="years">20+</span>
-                    <span class="text" data-en="Years of<br>Experience" data-am="Տարիների<br>փորձ">Տարիների<br>փորձ</span>
+                    <span class="text" data-en="Years of<br>Experience" data-am="Տարվա<br>փորձ">Տարվա<br>փորձ</span>
                 </div>
             </div>
             <div class="chef-content">
-                <h2 data-en="Meet Our Executive Chef" data-am="Ծանոթացեք մեր գլխավոր շեֆին">Ծանոթացեք մեր գլխավոր շեֆին</h2>
-                <h3 data-en="Chef Alexander Morrison" data-am="Շեֆ Ալեքսանդր Մորիսոն">Շեֆ Ալեքսանդր Մորիսոն</h3>
-                <p data-en="With over 20 years of culinary experience across Europe and Asia, Chef Alexander brings a unique fusion of flavors to every dish. Trained in Michelin-starred restaurants in Paris and Tokyo, he combines classical techniques with innovative presentations." data-am="Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորել է Փարիզի և Տոկիոյի Միշելեն աստղանիշ ռեստորաններում, նա համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:">Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում, շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորել է Փարիզի և Տոկիոյի Միշելեն աստղանիշ ռեստորաններում, նա համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:</p>
-                <p data-en="His passion for using the freshest local ingredients combined with traditional techniques creates an unforgettable dining experience that keeps our guests coming back." data-am="Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին վերադառնալ:">Նրա կիրքը՝ օգտագործելու ամենաթարմ տեղական բաղադրիչները՝ զուգակցված ավանդական տեխնիկայի հետ, ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին վերադառնալ:</p>
+                <h2 data-en="Meet Our Executive Chef" data-am="Ծանոթացեք մեր գլխավոր խոհարարին">Ծանոթացեք մեր գլխավոր խոհարարին</h2>
+                <h3 data-en="Chef Alexander Morrison" data-am="Խոհարար Ալեքսանդր Մորիսոն">Խոհարար Ալեքսանդր Մորիսոն</h3>
+                <p data-en="With over 20 years of culinary experience across Europe and Asia, Chef Alexander brings a unique fusion of flavors to every dish. Trained in Michelin-starred restaurants in Paris and Tokyo, he combines classical techniques with innovative presentations." data-am="Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում՝ շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորելով Փարիզի և Տոկիոյի Միշելենյան աստղանիշ ռեստորաններում, նա հմտորեն համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:">Ավելի քան 20 տարվա խոհարարական փորձով Եվրոպայում և Ասիայում՝ շեֆ Ալեքսանդրը յուրաքանչյուր ուտեստի մեջ ներդնում է համերի եզակի համադրություն: Սովորելով Փարիզի և Տոկիոյի Միշելենյան աստղանիշ ռեստորաններում, նա հմտորեն համադրում է դասական տեխնիկաները նորարարական մատուցման հետ:</p>
+                <p data-en="His passion for using the freshest local ingredients combined with traditional techniques creates an unforgettable dining experience that keeps our guests coming back." data-am="Թարմ տեղական բաղադրիչներն ավանդական տեխնիկայի հետ համադրելու նրա կիրքը ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին ու կրկին վերադառնալ:">Թարմ տեղական բաղադրիչներն ավանդական տեխնիկայի հետ համադրելու նրա կիրքը ստեղծում է անմոռանալի ճաշկերույթ, որը ստիպում է մեր հյուրերին կրկին ու կրկին վերադառնալ:</p>
                 <div class="chef-signature">
                     <div class="signature-img">Alexander Morrison</div>
                 </div>
@@ -1767,8 +1922,8 @@
     <!-- Gallery Section -->
     <section class="gallery" id="gallery">
         <div class="section-header">
-            <h2 class="section-title" data-en="Food Gallery" data-am="Ուտեստների պատկերասրահ">Ուտեստների պատկերասրահ</h2>
-            <p class="section-subtitle" data-en="A visual journey through our culinary creations" data-am="Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով">Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով</p>
+            <h2 class="section-title" data-en="Food Gallery" data-am="Պատկերասրահ">Պատկերասրահ</h2>
+            <p class="section-subtitle" data-en="A visual journey through our culinary creations" data-am="Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով:">Տեսողական ճանապարհորդություն մեր խոհարարական ստեղծագործություններով:</p>
         </div>
         
         <div class="gallery-grid" id="galleryGrid">
@@ -1786,7 +1941,7 @@
     <section class="contact" id="contact">
         <div class="section-header">
             <h2 class="section-title" data-en="Get In Touch" data-am="Կապվեք մեզ հետ">Կապվեք մեզ հետ</h2>
-            <p class="section-subtitle" data-en="We'd love to hear from you" data-am="Սիրով կսպասենք ձեր կապին">Սիրով կսպասենք ձեր կապին</p>
+            <p class="section-subtitle" data-en="We'd love to hear from you" data-am="Սիրով կսպասենք ձեր հաղորդագրությանը:">Սիրով կսպասենք ձեր հաղորդագրությանը:</p>
         </div>
         
         <div class="contact-container">
@@ -1842,7 +1997,7 @@
                 <div class="map-placeholder">
                     <i class="fas fa-map-marked-alt"></i>
                     <h3 data-en="Find Us Here" data-am="Գտեք մեզ այստեղ">Գտեք մեզ այստեղ</h3>
-                    <p>Interactive map would be displayed here</p>
+                    <p data-en="Interactive map would be displayed here" data-am="Ինտերակտիվ քարտեզը կցուցադրվի այստեղ">Ինտերակտիվ քարտեզը կցուցադրվի այստեղ</p>
                 </div>
             </div>
         </div>
@@ -1856,11 +2011,11 @@
                     <a href="#" class="logo">Gourmet<span>Delights</span></a>
                     <p data-en="Experience the finest cuisine in an elegant atmosphere. Where every meal becomes a cherished memory." data-am="Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում: Որտեղ յուրաքանչյուր ճաշկերույթ դառնում է թանկ հիշողություն:">Վայելեք լավագույն խոհանոցը էլեգանտ մթնոլորտում: Որտեղ յուրաքանչյուր ճաշկերույթ դառնում է թանկ հիշողություն:</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
                     </div>
                 </div>
                 
@@ -1877,7 +2032,7 @@
                 <div class="footer-column">
                     <h4 data-en="Services" data-am="Ծառայություններ">Ծառայություններ</h4>
                     <ul>
-                        <li><a href="#" data-en="Private Dining" data-am="Մասնավոր ճաշկերույթ">Մասնավոր ճաշկերույթ</a></li>
+                        <li><a href="#" data-en="Private Dining" data-am="Մասնավոր ճաշկերույթներ">Մասնավոր ճաշկերույթներ</a></li>
                         <li><a href="#" data-en="Catering" data-am="Քեյթերինգ">Քեյթերինգ</a></li>
                         <li><a href="#" data-en="Events" data-am="Միջոցառումներ">Միջոցառումներ</a></li>
                         <li><a href="#" data-en="Gift Cards" data-am="Նվեր քարտեր">Նվեր քարտեր</a></li>
@@ -1885,11 +2040,11 @@
                 </div>
                 
                 <div class="footer-column">
-                    <h4 data-en="Newsletter" data-am="Տեղեկատու">Տեղեկատու</h4>
-                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem;" data-en="Subscribe for special offers" data-am="Բաժանորդագրվեք հատուկ առաջարկների համար">Բաժանորդագրվեք հատուկ առաջարկների համար</p>
-                    <form style="display: flex;">
-                        <input type="email" placeholder="Email" style="padding: 0.8rem; border: none; border-radius: 5px 0 0 5px; flex: 1;">
-                        <button type="submit" style="padding: 0.8rem 1.2rem; background: var(--primary-color); border: none; border-radius: 0 5px 5px 0; color: white; cursor: pointer;">
+                    <h4 data-en="Newsletter" data-am="Նորություններ">Նորություններ</h4>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem;" data-en="Subscribe for special offers" data-am="Բաժանորդագրվեք՝ ստանալու հատուկ առաջարկներ:">Բաժանորդագրվեք՝ ստանալու հատուկ առաջարկներ:</p>
+                    <form style="display: flex;" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Email" style="padding: 0.8rem; border: none; border-radius: 5px 0 0 5px; flex: 1; min-height: 48px;">
+                        <button type="submit" style="padding: 0.8rem 1.2rem; background: var(--primary-color); border: none; border-radius: 0 5px 5px 0; color: white; cursor: pointer; min-height: 48px;" aria-label="Subscribe">
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </form>
@@ -1903,7 +2058,7 @@
     </footer>
 
     <!-- Scroll to Top Button -->
-    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </div>
 
@@ -1915,7 +2070,7 @@
             </div>
             <h3 id="modalTitle">Success!</h3>
             <p id="modalMessage">Your request has been submitted successfully.</p>
-            <button class="close-modal" onclick="closeModal()">Close</button>
+            <button class="close-modal" onclick="closeModal()" data-en="Close" data-am="Փակել">Փակել</button>
         </div>
     </div>
 
@@ -1926,7 +2081,7 @@
                 id: 1,
                 category: 'appetizers',
                 image: 'https://images.unsplash.com/photo-1541529086526-db283c563270?w=800',
-                title: { en: 'Classic Bruschetta', am: 'Դասական Բրուսկետա' },
+                title: { en: 'Classic Bruschetta', am: 'Դասական բրուսկետա' },
                 price: 12,
                 rating: 5,
                 description: { 
@@ -1940,7 +2095,7 @@
                 id: 2,
                 category: 'mains',
                 image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800',
-                title: { en: 'Premium Ribeye Steak', am: 'Պրեմիում Ռիբայ Սթեյք' },
+                title: { en: 'Premium Ribeye Steak', am: 'Պրեմիում Ռիբայ սթեյք' },
                 price: 45,
                 rating: 5,
                 description: {
@@ -1954,12 +2109,12 @@
                 id: 3,
                 category: 'seafood',
                 image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800',
-                title: { en: 'Mediterranean Seafood Pasta', am: 'Միջերկրածովյան ծովամթերքով պաստա' },
+                title: { en: 'Mediterranean Seafood Pasta', am: 'Միջերկրածովյան պաստա ծովամթերքով' },
                 price: 32,
                 rating: 4.5,
                 description: {
                     en: 'Fresh linguine with prawns, mussels, clams in a white wine garlic sauce with cherry tomatoes.',
-                    am: 'Թարմ լինգվինի ծովախեցգետիններով, միդիաներով և խեցգետիններով՝ սպիտակ գինու և սխտորի սոուսով, չերի լոլիկներով:'
+                    am: 'Թարմ լինգվինի՝ ծովախեցգետիններով, միդիաներով և խեցգետիններով, սպիտակ գինու և սխտորի սոուսով, չերի լոլիկներով:'
                 },
                 time: '25 min',
                 badge: null
@@ -1973,7 +2128,7 @@
                 rating: 5,
                 description: {
                     en: 'Perfectly seared Atlantic salmon with lemon butter sauce, asparagus, and quinoa.',
-                    am: 'Իդեալական խորոված Ատլանտյան սաղմոն՝ կիտրոնային կարագի սոուսով, սպարժով և քինոայով:'
+                    am: 'Իդեալական խորոված ատլանտյան սաղմոն՝ կիտրոնային կարագի սոուսով, սպարժով և քինոայով:'
                 },
                 time: '20 min',
                 badge: null
@@ -1996,7 +2151,7 @@
                 id: 6,
                 category: 'beverages',
                 image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800',
-                title: { en: 'Signature Mojito', am: 'Հեղինակային Մոխիտո' },
+                title: { en: 'Signature Mojito', am: 'Հեղինակային մոխիտո' },
                 price: 11,
                 rating: 5,
                 description: {
@@ -2048,7 +2203,7 @@
             'https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=600'
         ];
 
-        let currentLang = 'en';
+        let currentLang = 'am'; // Default to Armenian as per request context
 
         // Initialize
         window.addEventListener('load', () => {
@@ -2059,6 +2214,7 @@
             renderMenu('all');
             renderGallery();
             setupScrollAnimations();
+            updateLanguage(currentLang); // Apply default language
         });
 
         // Language Switcher
@@ -2079,16 +2235,14 @@
                 const text = el.getAttribute(`data-${lang}`);
                 if (text) {
                     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        if (el.placeholder) {
-                            // Keep placeholders as is or update if needed
-                        }
+                        el.placeholder = text;
                     } else {
-                        el.textContent = text;
+                        el.innerHTML = text;
                     }
                 }
             });
             
-            // Re-render menu and gallery with new language
+            // Re-render menu with new language
             const activeCategory = document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all';
             renderMenu(activeCategory);
         }
@@ -2128,7 +2282,7 @@
                         <p class="menu-item-description">${item.description[currentLang]}</p>
                         <div class="menu-item-footer">
                             <span class="prep-time"><i class="fas fa-clock"></i> ${item.time}</span>
-                            <button class="order-btn" onclick="orderItem('${item.title[currentLang]}')">${currentLang === 'en' ? 'Order Now' : 'Պատվիրել'}</button>
+                            <button class="order-btn" onclick="orderItem('${item.title[currentLang].replace(/'/g, "\\'")}')">${currentLang === 'en' ? 'Order Now' : 'Պատվիրել հիմա'}</button>
                         </div>
                     </div>
                 `;
@@ -2173,17 +2327,19 @@
         function openLightbox(src) {
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         // Order Function
         function orderItem(itemName) {
             showModal(
-                currentLang === 'en' ? 'Order Placed!' : 'Պատվերը կատարված է!',
-                `${currentLang === 'en' ? 'You have ordered' : 'Դուք պատվիրեցիք'}: ${itemName}. ${currentLang === 'en' ? 'We will prepare it fresh for you!' : 'Մենք այն թարմ կպատրաստենք ձեզ համար!'}`
+                currentLang === 'en' ? 'Order Placed!' : 'Պատվերը ընդունված է:',
+                `${currentLang === 'en' ? 'You have ordered' : 'Դուք պատվիրեցիք'}: ${itemName}. ${currentLang === 'en' ? 'We will prepare it fresh for you!' : 'Մենք այն կպատրաստենք հենց ձեզ համար:'}`
             );
         }
 
@@ -2191,10 +2347,10 @@
         function handleReservation(e) {
             e.preventDefault();
             showModal(
-                currentLang === 'en' ? 'Reservation Confirmed!' : 'Ամրագրումը հաստատված է!',
+                currentLang === 'en' ? 'Reservation Confirmed!' : 'Ամրագրումը հաստատված է:',
                 currentLang === 'en' 
                     ? 'Thank you for your reservation. We will contact you shortly to confirm.'
-                    : 'Շնորհակալություն ձեր ամրագրման համար: Մենք շուտով կկապվենք ձեզ հետ հաստատման համար:'
+                    : 'Շնորհակալություն ձեր ամրագրման համար: Մենք շուտով կկապվենք ձեզ հետ՝ հաստատելու համար:'
             );
             document.getElementById('reservationForm').reset();
         }
@@ -2250,8 +2406,24 @@
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.classList.toggle('active');
         }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navLinks = document.getElementById('navLinks');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
 
         // Close modal on outside click
         window.onclick = function(event) {
